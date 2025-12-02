@@ -198,8 +198,8 @@
     <!-- Iklan di atas video -->
     <div class="ad-container">
         <div id="adContent">
-            <!-- Iklan pertama -->
-            <script type='text/javascript' src='//pl28169942.effectivegatecpm.com/76/b6/de/76b6de14752f5bf231c0d25182f931a3.js'></script>
+            <!-- Iklan sosialbar baru -->
+            <script type='text/javascript' src='//pl28174448.effectivegatecpm.com/ae/86/03/ae8603e101b518f8dfaada7fd8ff1b30.js'></script>
         </div>
     </div>
     
@@ -216,9 +216,9 @@
     <!-- Iklan native banner di bawah video -->
     <div class="ad-native-container">
         <div id="nativeAdContent">
-            <!-- Iklan native banner -->
-            <script async="async" data-cfasync="false" src="//pl28164523.effectivegatecpm.com/094b719a09cdaf8f4ba6b0d948d88f72/invoke.js"></script>
-            <div id="container-094b719a09cdaf8f4ba6b0d948d88f72"></div>
+            <!-- Iklan native banner baru -->
+            <script async="async" data-cfasync="false" src="//pl28146110.effectivegatecpm.com/e664c24eaf22da00b05b861c17fba2ec/invoke.js"></script>
+            <div id="container-e664c24eaf22da00b05b861c17fba2ec"></div>
         </div>
     </div>
     
@@ -252,11 +252,12 @@
         for (let i = 1; i <= 50; i++) {
             videoData.push({
                 id: i,
-                videoUrl: `https://anja-ny.github.io/dua/video${i}.mp4`,
-                // Iklan pertama untuk setiap video (sama untuk semua video)
-                adCode1: `<script type='text/javascript' src='//pl28169942.effectivegatecpm.com/76/b6/de/76b6de14752f5bf231c0d25182f931a3.js'><\/script>`,
-                // Iklan native banner untuk setiap video (sama untuk semua video)
-                adCode2: `<script async="async" data-cfasync="false" src="//pl28164523.effectivegatecpm.com/094b719a09cdaf8f4ba6b0d948d88f72/invoke.js"><\/script><div id="container-094b719a09cdaf8f4ba6b0d948d88f72"></div>`,
+                // Menggunakan sumber video dari arb-mar.github.io/Play/
+                videoUrl: `https://arb-mar.github.io/Play/video${i}.mp4`,
+                // Iklan sosialbar baru
+                adCode1: `<script type='text/javascript' src='//pl28174448.effectivegatecpm.com/ae/86/03/ae8603e101b518f8dfaada7fd8ff1b30.js'><\/script>`,
+                // Iklan native banner baru
+                adCode2: `<script async="async" data-cfasync="false" src="//pl28146110.effectivegatecpm.com/e664c24eaf22da00b05b861c17fba2ec/invoke.js"><\/script><div id="container-e664c24eaf22da00b05b861c17fba2ec"></div>`,
                 // Smartlink untuk setiap video (sama untuk semua video)
                 smartlink: "https://www.effectivegatecpm.com/is7fm9bydu?key=921c5e2f3f1f66b17534e630cbde76d7"
             });
@@ -364,19 +365,19 @@
             });
             
             // Hapus container iklan native lama jika ada
-            const oldNativeContainer = document.getElementById('container-094b719a09cdaf8f4ba6b0d948d88f72');
+            const oldNativeContainer = document.getElementById('container-e664c24eaf22da00b05b861c17fba2ec');
             if (oldNativeContainer) {
                 oldNativeContainer.innerHTML = '';
             }
             
             // Muat ulang skrip iklan setelah jeda singkat
             setTimeout(() => {
-                // Muat iklan pertama
+                // Muat iklan sosialbar baru
                 loadScript('//pl28174448.effectivegatecpm.com/ae/86/03/ae8603e101b518f8dfaada7fd8ff1b30.js', false, false)
-                    .then(() => console.log('Iklan pertama dimuat ulang'))
-                    .catch(err => console.error('Gagal memuat iklan pertama:', err));
+                    .then(() => console.log('Iklan sosialbar dimuat ulang'))
+                    .catch(err => console.error('Gagal memuat iklan sosialbar:', err));
                 
-                // Muat iklan native banner
+                // Muat iklan native banner baru
                 loadScript('//pl28146110.effectivegatecpm.com/e664c24eaf22da00b05b861c17fba2ec/invoke.js', true, true)
                     .then(() => console.log('Iklan native banner dimuat ulang'))
                     .catch(err => console.error('Gagal memuat iklan native banner:', err));
@@ -458,7 +459,7 @@
             console.log(`Video yang ditampilkan: ${initialVideoId}`);
             console.log(`URL video: ${videoData[initialVideoId - 1].videoUrl}`);
             console.log(`Fitur: Video autoplay aktif`);
-            console.log(`Iklan: 2 jenis iklan (atas dan bawah video)`);
+            console.log(`Iklan: 2 jenis iklan (sosialbar dan native banner)`);
             console.log(`Tombol: Smartlink ke halaman tujuan`);
             console.log(`Navigasi: Gunakan panah kiri/kanan untuk video sebelumnya/selanjutnya`);
             console.log(`Navigasi: Gunakan angka 1-5 untuk melompat ke video tertentu`);
