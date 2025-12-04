@@ -1,131 +1,541 @@
-                <h2 id="currentVideoTitle">Video 1: video1.mp4</h2>
-
-                <h3 style="margin-top:20px;">📋 Kode Embed Blogger</h3>
-                <div class="embed-code" id="embedCode"></div>
-                <button class="copy-btn" id="copyEmbedBtn">📋 Salin Kode Embed</button>
-                <div id="copySuccess" style="display:none;color:green;margin-top:10px;">Kode berhasil disalin!</div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koleksi Video Saya - Kususvideo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .video-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .video-container {
+            width: 100%;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-controls {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #764ba2;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .video-list {
+            margin-top: 20px;
+        }
+        
+        .video-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        .video-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .video-item.active {
+            background: #667eea;
+            color: white;
+            border-left-color: #764ba2;
+        }
+        
+        .video-item .video-name {
+            font-weight: 600;
+        }
+        
+        .video-item .video-size {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 3px;
+        }
+        
+        .code-section {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-section h3 {
+            color: #ecf0f1;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .embed-code {
+            background: #34495e;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .copy-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #219653;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .page-btn {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .page-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .instructions h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Koleksi Video Play</h1>
+            <p class="subtitle">Video 1 sampai 50 - Siap diembed ke Blogger</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="video-section">
+                <div class="video-container">
+                    <video id="mainVideo" controls autoplay muted playsinline>
+                        <source id="videoSource" src="https://arb-mar.github.io/Play/video1" type="video/mp4">
+                        Browser Anda tidak mendukung pemutar video.
+                    </video>
+                </div>
+                
+                <div class="video-controls">
+                    <button class="btn btn-primary" id="playBtn">▶️ Putar Video</button>
+                    <button class="btn btn-secondary" id="pauseBtn">⏸️ Jeda</button>
+                    <button class="btn btn-secondary" id="muteBtn">🔇 Matikan Suara</button>
+                    <button class="btn btn-secondary" id="fullscreenBtn">📺 Layar Penuh</button>
+                    <div style="flex-grow: 1;"></div>
+                    <button class="btn btn-primary" id="autoplayBtn">⚡ Mode Autoplay</button>
+                </div>
+                
+                <h2 id="currentVideoTitle">Video 1: video1</h2>
+                
+                <div class="code-section">
+                    <h3>📋 Kode Embed untuk Blogger</h3>
+                    <div class="embed-code" id="embedCode">
+&lt;!-- Kode Video untuk Blogger --&gt;
+&lt;div style="width:100%; max-width:800px; margin:20px auto; border-radius:10px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1);"&gt;
+  &lt;video width="100%" controls autoplay muted playsinline&gt;
+    &lt;source src="https://arb-mar.github.io/Play/video1" type="video/mp4"&gt;
+    Browser Anda tidak mendukung pemutar video.
+  &lt;/video&gt;
+&lt;/div&gt;
+&lt;!-- Akhir Kode Video --&gt;
+                    </div>
+                    <button class="copy-btn" id="copyEmbedBtn">📋 Salin Kode Embed</button>
+                    <div class="success-message" id="copySuccess">✅ Kode berhasil disalin! Tempel di Blogger (mode HTML)</div>
+                </div>
+                
+                <div class="instructions">
+                    <h4>📌 Cara Menggunakan:</h4>
+                    <ol>
+                        <li>Pilih video dari daftar di samping</li>
+                        <li>Klik "Salin Kode Embed"</li>
+                        <li>Login ke Blogger dan buat postingan baru</li>
+                        <li>Ubah editor ke mode "HTML"</li>
+                        <li>Tempel kode di tempat yang diinginkan</li>
+                        <li>Video akan otomatis play di blog Anda</li>
+                    </ol>
+                </div>
             </div>
-
+            
             <div class="sidebar">
                 <h3>📁 Daftar Video</h3>
                 <p>Total: <span id="totalVideos">50</span> video tersedia</p>
-
-                <div id="pagination" style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap;"></div>
-                <div class="video-list" id="videoList"></div>
+                
+                <div class="pagination" id="pagination">
+                    <!-- Pagination buttons will be generated here -->
+                </div>
+                
+                <div class="video-list" id="videoList">
+                    <!-- Video items will be generated here -->
+                </div>
+                
+                <div style="margin-top: 20px; font-size: 0.9rem; color: #666;">
+                    <p><strong>💡 Info:</strong></p>
+                    <p>URL video format:</p>
+                    <code style="background: #f8f9fa; padding: 5px; border-radius: 3px; display: block; margin: 5px 0;">
+                        https://arb-mar.github.io/Play/video[angka]
+                    </code>
+                    <p>Contoh: video1, video2, ... video50</p>
+                </div>
             </div>
         </div>
-
-        <footer>
-            <p>© 2024 Play - Hosted on GitHub Pages</p>
+        
+        <footer style="text-align: center; margin-top: 40px; color: white; opacity: 0.8; padding: 20px;">
+            <p>© 2023 Play Video - Semua video siap diembed ke Blogger</p>
+            <p style="font-size: 0.9rem;">Hosted on GitHub Pages</p>
         </footer>
     </div>
 
     <script>
-        // Daftar 50 Video
+        // Video data - adjust this array based on your actual videos
         const videoData = [];
         for (let i = 1; i <= 50; i++) {
             videoData.push({
                 id: i,
-                filename: `video${i}.mp4`,
+                filename: `video${i}`,
                 title: `Video ${i}`,
-                url: `https://arb-mar.github.io/Play/video${i}.mp4`,
-                size: '~10 MB'
+                url: `https://arb-mar.github.io/Play/video${i}`,
+                size: '~10 MB' // You can update this with actual sizes
             });
         }
-
+        
+        // DOM Elements
         const mainVideo = document.getElementById('mainVideo');
         const videoSource = document.getElementById('videoSource');
         const currentVideoTitle = document.getElementById('currentVideoTitle');
         const embedCode = document.getElementById('embedCode');
         const videoList = document.getElementById('videoList');
         const pagination = document.getElementById('pagination');
-
+        const totalVideos = document.getElementById('totalVideos');
+        
+        // Current state
         let currentVideoIndex = 0;
         let autoplayMode = true;
         const videosPerPage = 10;
         let currentPage = 0;
-
+        
+        // Initialize
         function init() {
+            totalVideos.textContent = videoData.length;
             renderVideoList();
             renderPagination();
             loadVideo(0);
         }
-
+        
+        // Render video list
         function renderVideoList() {
             videoList.innerHTML = '';
-            const start = currentPage * videosPerPage;
-            const end = Math.min(start + videosPerPage, videoData.length);
-
-            for (let i = start; i < end; i++) {
+            const startIndex = currentPage * videosPerPage;
+            const endIndex = Math.min(startIndex + videosPerPage, videoData.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
                 const video = videoData[i];
-                const item = document.createElement('div');
-                item.className = `video-item ${i === currentVideoIndex ? 'active' : ''}`;
-                item.innerHTML = `
+                const videoItem = document.createElement('div');
+                videoItem.className = `video-item ${i === currentVideoIndex ? 'active' : ''}`;
+                videoItem.innerHTML = `
                     <div class="video-name">${video.title}</div>
-                    <div class="video-size">${video.filename}</div>
+                    <div class="video-size">${video.filename} • ${video.size}</div>
                 `;
-                item.addEventListener('click', () => loadVideo(i));
-                videoList.appendChild(item);
+                videoItem.addEventListener('click', () => {
+                    loadVideo(i);
+                });
+                videoList.appendChild(videoItem);
             }
         }
-
+        
+        // Render pagination
         function renderPagination() {
             pagination.innerHTML = '';
             const totalPages = Math.ceil(videoData.length / videosPerPage);
+            
             for (let i = 0; i < totalPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = `btn-secondary ${i === currentPage ? 'page-btn active' : 'page-btn'}`;
-                btn.textContent = i + 1;
-                btn.addEventListener('click', () => {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i + 1;
+                pageBtn.addEventListener('click', () => {
                     currentPage = i;
                     renderVideoList();
                     renderPagination();
                 });
-                pagination.appendChild(btn);
+                pagination.appendChild(pageBtn);
             }
         }
-
-        function loadVideo(i) {
-            currentVideoIndex = i;
-            const video = videoData[i];
-
+        
+        // Load video
+        function loadVideo(index) {
+            if (index < 0 || index >= videoData.length) return;
+            
+            const video = videoData[index];
+            currentVideoIndex = index;
+            
+            // Update video source
             videoSource.src = video.url;
             mainVideo.load();
-            if (autoplayMode) mainVideo.play();
-
+            
+            // Update title
             currentVideoTitle.textContent = `${video.title}: ${video.filename}`;
+            
+            // Update active state in list
+            document.querySelectorAll('.video-item').forEach((item, i) => {
+                const videoIndex = currentPage * videosPerPage + i;
+                item.classList.toggle('active', videoIndex === index);
+            });
+            
+            // Update embed code
             updateEmbedCode();
-            renderVideoList();
+            
+            // Auto play if enabled
+            if (autoplayMode) {
+                mainVideo.play().catch(e => console.log('Autoplay prevented:', e));
+            }
         }
-
+        
+        // Update embed code
         function updateEmbedCode() {
             const video = videoData[currentVideoIndex];
-            embedCode.textContent = `
-<!-- Video Blogger -->
-<div style="width:100%;max-width:800px;margin:auto;">
-  <video width="100%" controls autoplay muted playsinline>
+            const autoplayAttr = autoplayMode ? 'autoplay ' : '';
+            
+            const code = `<!-- Kode Video untuk Blogger -->
+<div style="width:100%; max-width:800px; margin:20px auto; border-radius:10px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+  <video width="100%" controls ${autoplayAttr}muted playsinline>
     <source src="${video.url}" type="video/mp4">
+    Browser Anda tidak mendukung pemutar video.
   </video>
-</div>`;
+</div>
+<!-- Akhir Kode Video -->`;
+            
+            embedCode.textContent = code;
         }
-
+        
+        // Button event listeners
+        document.getElementById('playBtn').addEventListener('click', () => {
+            mainVideo.play();
+        });
+        
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            mainVideo.pause();
+        });
+        
+        document.getElementById('muteBtn').addEventListener('click', () => {
+            mainVideo.muted = !mainVideo.muted;
+            document.getElementById('muteBtn').textContent = mainVideo.muted ? '🔇 Matikan Suara' : '🔊 Hidupkan Suara';
+        });
+        
+        document.getElementById('fullscreenBtn').addEventListener('click', () => {
+            if (mainVideo.requestFullscreen) {
+                mainVideo.requestFullscreen();
+            } else if (mainVideo.webkitRequestFullscreen) {
+                mainVideo.webkitRequestFullscreen();
+            } else if (mainVideo.mozRequestFullScreen) {
+                mainVideo.mozRequestFullScreen();
+            } else if (mainVideo.msRequestFullscreen) {
+                mainVideo.msRequestFullscreen();
+            }
+        });
+        
+        document.getElementById('autoplayBtn').addEventListener('click', () => {
+            autoplayMode = !autoplayMode;
+            document.getElementById('autoplayBtn').textContent = autoplayMode ? '⚡ Mode Autoplay' : '⏸️ Mode Manual';
+            updateEmbedCode();
+        });
+        
+        // Copy embed code
         document.getElementById('copyEmbedBtn').addEventListener('click', () => {
-            const textarea = document.createElement('textarea');
-            textarea.value = embedCode.textContent;
-            document.body.appendChild(textarea);
-            textarea.select();
+            const codeToCopy = embedCode.textContent;
+            
+            // Create temporary textarea
+            const textArea = document.createElement('textarea');
+            textArea.value = codeToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
             document.execCommand('copy');
-            textarea.remove();
-            document.getElementById('copySuccess').style.display = 'block';
-            setTimeout(() => (copySuccess.style.display = 'none'), 2000);
+            document.body.removeChild(textArea);
+            
+            // Show success message
+            const successMsg = document.getElementById('copySuccess');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
         });
-
+        
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') loadVideo((currentVideoIndex + 1) % videoData.length);
-            if (e.key === 'ArrowLeft') loadVideo((currentVideoIndex - 1 + videoData.length) % videoData.length);
+            switch(e.key) {
+                case 'ArrowRight':
+                    e.preventDefault();
+                    loadVideo((currentVideoIndex + 1) % videoData.length);
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    loadVideo((currentVideoIndex - 1 + videoData.length) % videoData.length);
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    if (mainVideo.paused) mainVideo.play();
+                    else mainVideo.pause();
+                    break;
+            }
         });
-
+        
+        // Initialize on page load
         window.addEventListener('DOMContentLoaded', init);
+        
+        // Log for debugging
+        console.log('Video Player Loaded');
+        console.log('Video URLs format: https://arb-mar.github.io/Play/video[number]');
+        console.log('Example: https://arb-mar.github.io/Play/video1');
     </script>
 </body>
 </html>
